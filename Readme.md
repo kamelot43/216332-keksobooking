@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Андрей Пудов](https://up.htmlacademy.ru/javascript/10/user/216332).
-* Наставник: `Неизвестно`.
+* Наставник: `Без наставника`.
 
 ---
 

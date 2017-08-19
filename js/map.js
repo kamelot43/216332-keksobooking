@@ -38,6 +38,20 @@ var FEATURES = [
 
 var TYPE_ROOMS = ["flat", "house", "bungalo"];
 
+var Template = document.querySelector('#lodge-template').content;
+
+function setTypeOfRooms(room) {
+  if (room === 'flat') {
+    return 'Квартира';
+  }
+  else if (room === 'bungalo') {
+    return 'Бунгало';
+  }
+  else {
+    return 'Дом';
+  }
+}
+
 //получить случайное значение из диапазона от мин до макс
 function returnRandomValue(min, max) {
   return min + Math.floor(Math.random() * (max + 1 - min));
@@ -90,6 +104,8 @@ function createOffers(param) {
 }
 
 var tokyoPinMap = document.querySelector(".tokyo__pin-map");
+var offerDialog = document.querySelector(".offer-dialog");
+var dialogPanel = document.querySelector('.dialog__panel');
 
 //функция, создающая div с заданными параметрами
 
@@ -111,4 +127,37 @@ function createPins(arrays) {
   return fragment;
 }
 
-tokyoPinMap.appendChild(createPins(createOffers(OFFERS_AMOUNT)));
+var x = createOffers(OFFERS_AMOUNT);
+
+tokyoPinMap.appendChild(createPins(x));
+
+// Создание пустых спанов
+function createEmptySpan(arrays) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < arrays.offer.features.length; i++) {
+    var features = arrays.offer.features[i];
+    var span = document.createElement("span");
+    span.className = 'feature__image feature__image--' + features;
+    fragment.appendChild(span);
+  }
+  return fragment;
+}
+
+
+var renderOffer = function (array) {
+var OfferElement = Template.cloneNode(true);
+
+
+  OfferElement.querySelector('.lodge__title').textContent = array.offer.title;
+  OfferElement.querySelector('.lodge__address').textContent = array.offer.address;
+  OfferElement.querySelector('.lodge__price').textContent = array.offer.price + '&#x20bd;/ночь';
+  OfferElement.querySelector('.lodge__type').textContent = setTypeOfRooms(array.offer.type);
+  OfferElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для' + array.offer.guests + 'гостей в' + array.offer.rooms + 'комнатах';
+  OfferElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после' + array.offer.checkin + ', выезд до ' + array.offer.checkout;
+  OfferElement.querySelector('.lodge__features').appendChild(createEmptySpan(array));
+  OfferElement.querySelector('.lodge__description').textContent = array.offer.description;
+  return OfferElement;
+};
+
+var result = renderOffer(x[0]);
+offerDialog.replaceChild(result, dialogPanel);

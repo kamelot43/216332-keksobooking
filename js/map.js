@@ -89,7 +89,7 @@ function createOffers(param) {
       location: location,
       offer: {
         title: OFFER_HEADING[i],
-        adress: location.x + "," + location.y,
+        adress: location.x + ',' + location.y,
         price: returnRandomValue(PRICE_MIN, PRICE_MAX),
         type: getRandomElem(TYPE_ROOMS),
         rooms: returnRandomValue(ROOMS_MIN, ROOMS_MAX),
@@ -147,7 +147,7 @@ function createEmptySpan(arrays) {
   return fragment;
 }
 
-var renderOffer = function(array) {
+function renderOffer(array) {
   var OfferElement = Template.cloneNode(true);
 
   OfferElement.querySelector('.lodge__title').textContent = array.offer.title;
@@ -156,7 +156,7 @@ var renderOffer = function(array) {
   OfferElement.querySelector('.lodge__price').innerHTML =
     array.offer.price + '&#x20bd;/ночь';
   OfferElement.querySelector('.lodge__type').textContent = setTypeOfRooms(
-    array.offer.type
+      array.offer.type
   );
   OfferElement.querySelector('.lodge__rooms-and-guests').textContent =
     'Для' +
@@ -176,7 +176,7 @@ var renderOffer = function(array) {
     ' ' +
     array.offer.checkout;
   OfferElement.querySelector('.lodge__features').appendChild(
-    createEmptySpan(array)
+      createEmptySpan(array)
   );
   OfferElement.querySelector('.lodge__description').textContent =
     array.offer.description;
@@ -184,10 +184,10 @@ var renderOffer = function(array) {
 };
 
 // Функция вставки новых данных на страницу
-function PasteNewData(value) {
+function pasteNewData(value) {
   var result = renderOffer(value);
   offerDialog.replaceChild(result, dialogPanel);
   dialogAvatar.src = value.author.avatar;
 }
 
-PasteNewData(x[0]);
+pasteNewData(x[0]);

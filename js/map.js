@@ -181,7 +181,7 @@ function renderOffer(array) {
   OfferElement.querySelector('.lodge__description').textContent =
     array.offer.description;
   return OfferElement;
-};
+}
 
 // Функция вставки новых данных на страницу
 function pasteNewData(value) {

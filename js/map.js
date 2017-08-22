@@ -40,7 +40,7 @@ var FEATURES = [
 
 var TYPE_ROOMS = ['flat', 'house', 'bungalo'];
 
-var Template = document.querySelector('#lodge-template').content;
+var template = document.querySelector('#lodge-template').content;
 
 function setTypeOfRooms(room) {
   if (room === 'flat') {
@@ -148,17 +148,17 @@ function createEmptySpan(arrays) {
 }
 
 function renderOffer(array) {
-  var OfferElement = Template.cloneNode(true);
+  var offerElement = template.cloneNode(true);
 
-  OfferElement.querySelector('.lodge__title').textContent = array.offer.title;
-  OfferElement.querySelector('.lodge__address').textContent =
+  offerElement.querySelector('.lodge__title').textContent = array.offer.title;
+  offerElement.querySelector('.lodge__address').textContent =
     array.offer.adress;
-  OfferElement.querySelector('.lodge__price').innerHTML =
+  offerElement.querySelector('.lodge__price').innerHTML =
     array.offer.price + '&#x20bd;/ночь';
-  OfferElement.querySelector('.lodge__type').textContent = setTypeOfRooms(
+  offerElement.querySelector('.lodge__type').textContent = setTypeOfRooms(
       array.offer.type
   );
-  OfferElement.querySelector('.lodge__rooms-and-guests').textContent =
+  offerElement.querySelector('.lodge__rooms-and-guests').textContent =
     'Для' +
     ' ' +
     array.offer.guests +
@@ -168,19 +168,19 @@ function renderOffer(array) {
     array.offer.rooms +
     ' ' +
     'комнатах';
-  OfferElement.querySelector('.lodge__checkin-time').textContent =
+  offerElement.querySelector('.lodge__checkin-time').textContent =
     'Заезд после' +
     ' ' +
     array.offer.checkin +
     ', выезд до ' +
     ' ' +
     array.offer.checkout;
-  OfferElement.querySelector('.lodge__features').appendChild(
+  offerElement.querySelector('.lodge__features').appendChild(
       createEmptySpan(array)
   );
-  OfferElement.querySelector('.lodge__description').textContent =
+  offerElement.querySelector('.lodge__description').textContent =
     array.offer.description;
-  return OfferElement;
+  return offerElement;
 }
 
 // Функция вставки новых данных на страницу

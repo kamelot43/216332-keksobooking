@@ -175,9 +175,9 @@ function renderOffer(array) {
     ', выезд до ' +
     ' ' +
     array.offer.checkout;
-  offerElement.querySelector('.lodge__features').appendChild(
-      createEmptySpan(array)
-  );
+  offerElement
+      .querySelector('.lodge__features')
+      .appendChild(createEmptySpan(array));
   offerElement.querySelector('.lodge__description').textContent =
     array.offer.description;
   return offerElement;
@@ -186,8 +186,34 @@ function renderOffer(array) {
 // Функция вставки новых данных на страницу
 function pasteNewData(value) {
   var result = renderOffer(value);
-  offerDialog.replaceChild(result, dialogPanel);
+  dialogPanel.innerHTML = '';
+  dialogPanel.appendChild(result);
   dialogAvatar.src = value.author.avatar;
 }
 
 pasteNewData(x[0]);
+
+var tokyo = document.querySelector('.tokyo');
+
+var pin = document.querySelectorAll('.pin');
+
+tokyo.addEventListener('click', function (evt) {
+  var target = evt.target;
+
+  if (target.parentNode.classList.contains('pin')) {
+    for (var j = 0; j < pin.length; j++) {
+      if (pin[j].classList.contains('pin--active')) {
+        pin[j].classList.remove('pin--active');
+      }
+    }
+    target.parentNode.classList.add('pin--active');
+
+    for (var i = 0; i < pin.length; i++) {
+      var z = pin[i].childNodes[0].getAttribute('src');
+      if (z === target.getAttribute('src')) {
+        pasteNewData(x[i - 1]);
+        break;
+      }
+    }
+  }
+});

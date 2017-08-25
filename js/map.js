@@ -108,6 +108,7 @@ function createOffers(param) {
 var tokyoPinMap = document.querySelector('.tokyo__pin-map');
 var offerDialog = document.querySelector('#offer-dialog');
 var dialogPanel = document.querySelector('.dialog__panel');
+var closeDialog = offerDialog.querySelector('.dialog__close');
 
 var dialogAvatar = document.querySelector('.dialog__title > img');
 
@@ -125,6 +126,7 @@ function createPins(arrays) {
     img.src = arrays[i].author.avatar;
     pin.style.left = arrays[i].location.x + 'px';
     pin.style.top = arrays[i].location.y + 'px';
+    pin.setAttribute('tabindex', '0');
     pin.appendChild(img);
     fragment.appendChild(pin);
   }
@@ -197,15 +199,21 @@ var tokyo = document.querySelector('.tokyo');
 
 var pin = document.querySelectorAll('.pin');
 
+// Проверка на класс .pin--active
+function getActivePin() {
+  for (var j = 0; j < pin.length; j++) {
+    if (pin[j].classList.contains('pin--active')) {
+      pin[j].classList.remove('pin--active');
+    }
+  }
+}
+
 tokyo.addEventListener('click', function (evt) {
   var target = evt.target;
 
   if (target.parentNode.classList.contains('pin')) {
-    for (var j = 0; j < pin.length; j++) {
-      if (pin[j].classList.contains('pin--active')) {
-        pin[j].classList.remove('pin--active');
-      }
-    }
+    openPopup();
+    getActivePin();
     target.parentNode.classList.add('pin--active');
 
     for (var i = 0; i < pin.length; i++) {
@@ -216,4 +224,28 @@ tokyo.addEventListener('click', function (evt) {
       }
     }
   }
+});
+
+// Обработчки открытия/закрытия окна диалога
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === 27) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  offerDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+
+var closePopup = function () {
+  offerDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+
+closeDialog.addEventListener('click', function () {
+  closePopup();
+  getActivePin();
 });

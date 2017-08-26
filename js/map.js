@@ -11,6 +11,11 @@ var OFFERS_AMOUNT = 8;
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 40;
 
+// Клавиши
+
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
 var MIN_COORDINATE_X = 300;
 var MAX_COORDINATE_X = 900;
 var MIN_COORDINATE_Y = 100;
@@ -108,6 +113,7 @@ function createOffers(param) {
 var tokyoPinMap = document.querySelector('.tokyo__pin-map');
 var offerDialog = document.querySelector('#offer-dialog');
 var dialogPanel = document.querySelector('.dialog__panel');
+var closeDialog = offerDialog.querySelector('.dialog__close');
 
 var dialogAvatar = document.querySelector('.dialog__title > img');
 
@@ -125,6 +131,7 @@ function createPins(arrays) {
     img.src = arrays[i].author.avatar;
     pin.style.left = arrays[i].location.x + 'px';
     pin.style.top = arrays[i].location.y + 'px';
+    pin.setAttribute('tabindex', '0');
     pin.appendChild(img);
     fragment.appendChild(pin);
   }
@@ -175,9 +182,9 @@ function renderOffer(array) {
     ', выезд до ' +
     ' ' +
     array.offer.checkout;
-  offerElement.querySelector('.lodge__features').appendChild(
-      createEmptySpan(array)
-  );
+  offerElement
+      .querySelector('.lodge__features')
+      .appendChild(createEmptySpan(array));
   offerElement.querySelector('.lodge__description').textContent =
     array.offer.description;
   return offerElement;
@@ -186,8 +193,85 @@ function renderOffer(array) {
 // Функция вставки новых данных на страницу
 function pasteNewData(value) {
   var result = renderOffer(value);
-  offerDialog.replaceChild(result, dialogPanel);
+  dialogPanel.innerHTML = '';
+  dialogPanel.appendChild(result);
   dialogAvatar.src = value.author.avatar;
 }
 
 pasteNewData(x[0]);
+
+var tokyo = document.querySelector('.tokyo');
+
+var pin = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
+
+// Проверка на класс .pin--active
+function getActivePin() {
+  for (var j = 0; j < pin.length; j++) {
+    if (pin[j].classList.contains('pin--active')) {
+      pin[j].classList.remove('pin--active');
+    }
+  }
+}
+// Функция отрисовки выбранного пина
+function renderCurrentPin(target) {
+  openPopup();
+  getActivePin();
+  target.parentNode.classList.add('pin--active');
+
+  // Функция сравнивает атр. src у элемента из коллекции Pin с текущим элементом(target)
+  for (var i = 0; i < pin.length; i++) {
+    var z = pin[i].childNodes[0].getAttribute('src');
+    if (z === target.getAttribute('src')) {
+      pasteNewData(x[i]);
+      break;
+    }
+  }
+}
+
+tokyo.addEventListener('click', function (evt) {
+  var target = evt.target;
+
+  if (target.parentNode.classList.contains('pin')) {
+    renderCurrentPin(target);
+  }
+});
+
+tokyo.addEventListener('keydown', function (evt) {
+  var target = evt.target.childNodes[0];
+
+  if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
+    renderCurrentPin(target);
+  }
+});
+
+// Обработчки открытия/закрытия окна диалога + деактивации пина
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+    getActivePin();
+  }
+};
+
+// Функция открытия окна диалога
+var openPopup = function () {
+  offerDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+// Функция закрытия окна диалога
+var closePopup = function () {
+  offerDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+closeDialog.addEventListener('click', function () {
+  closePopup();
+  getActivePin();
+});
+
+closeDialog.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    getActivePin();
+    closePopup();
+  }
+});

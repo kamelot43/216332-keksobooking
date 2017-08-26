@@ -280,13 +280,32 @@ closeDialog.addEventListener('keydown', function (evt) {
 
 var housingType = document.querySelector('#type');
 var priceInput = document.querySelector('#price');
+
+var timeInInput = document.querySelector('#timein');
+var timeOutInput = document.querySelector('#timeout');
 priceInput.value = 1000;
+
 
 // Установить мин.значение цены + минимально допустимое
 function setMinPriceInput(value) {
   priceInput.value = value;
   priceInput.min = value;
 }
+
+// Динамическое изменение поля время заезда
+timeInInput.addEventListener('change', function (evt) {
+
+  var val = timeInInput.selectedIndex;
+  timeOutInput.selectedIndex = val;
+});
+
+// Динамическое изменение поля время выезда
+timeOutInput.addEventListener('change', function (evt) {
+
+  var val = timeOutInput.selectedIndex;
+  timeInInput.selectedIndex = val;
+});
+
 
 housingType.addEventListener('change', function (evt) {
   var val = housingType.options[housingType.selectedIndex].value;

@@ -275,3 +275,29 @@ closeDialog.addEventListener('keydown', function (evt) {
     closePopup();
   }
 });
+
+// Работа с валидацией формы
+
+var housingType = document.querySelector('#type');
+var priceInput = document.querySelector('#price');
+priceInput.value = 1000;
+
+// Установить мин.значение цены + минимально допустимое
+function setMinPriceInput(value) {
+  priceInput.value = value;
+  priceInput.min = value;
+}
+
+housingType.addEventListener('change', function (evt) {
+  var val = housingType.options[housingType.selectedIndex].value;
+
+  if (val === 'bungalo') {
+    setMinPriceInput(0);
+  } else if (val === 'house') {
+    setMinPriceInput(5000);
+  } else if (val === 'palace') {
+    setMinPriceInput(10000);
+  } else {
+    setMinPriceInput(1000);
+  }
+});

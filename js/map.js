@@ -12,14 +12,25 @@ var PIN_WIDTH = 40;
 var PIN_HEIGHT = 40;
 
 // Клавиши
-
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+
+// Поля формы количество гостей
+
+var INPUT_GUESTS_MAX = 0;
+var INPUT_GUESTS_MIN = 3;
 
 var MIN_COORDINATE_X = 300;
 var MAX_COORDINATE_X = 900;
 var MIN_COORDINATE_Y = 100;
 var MAX_COORDINATE_Y = 500;
+
+// Параметры формы
+
+var MIN_PRICE = 0;
+var MAX_PRICE = 1000000;
+var MIN_TEXTFIELD = 30;
+var MAX_TEXTFIELD = 100;
 
 var OFFER_HEADING = [
   'Большая уютная квартира',
@@ -283,6 +294,10 @@ var priceInput = document.querySelector('#price');
 
 var timeInInput = document.querySelector('#timein');
 var timeOutInput = document.querySelector('#timeout');
+var roomNumer = document.querySelector('#room_number');
+var questsNumer = document.querySelector('#capacity');
+
+
 priceInput.value = 1000;
 
 
@@ -291,6 +306,20 @@ function setMinPriceInput(value) {
   priceInput.value = value;
   priceInput.min = value;
 }
+
+// Динамическое изменение поля количество комнат
+
+roomNumer.addEventListener('change', function (evt) {
+
+  var val = roomNumer.selectedIndex;
+  if (val === 0) {
+    questsNumer.selectedIndex = INPUT_GUESTS_MIN;
+  } else {
+    questsNumer.selectedIndex = INPUT_GUESTS_MAX;
+  }
+
+});
+
 
 // Динамическое изменение поля время заезда
 timeInInput.addEventListener('change', function (evt) {
@@ -319,4 +348,51 @@ housingType.addEventListener('change', function (evt) {
   } else {
     setMinPriceInput(1000);
   }
+});
+
+var formOfferTitle = document.querySelector('#title');
+var formAddress = document.querySelector('#address');
+
+var formPriceInput = document.querySelector('#price');
+
+// Функция проверки текстового поля формы
+function validateTextInput(input, minValue, maxValue) {
+  if (input.value.length < minValue) {
+    input.setCustomValidity('Минимальная длина заголовка - ' + minValue + ' ' + 'символов');
+    input.style.borderColor = 'red';
+  } else if (input.value.length > maxValue) {
+    input.setCustomValidity('Максимальная длина заголовка - ' + maxValue + ' ' + 'символов');
+    input.style.borderColor = 'red';
+  } else {
+    input.setCustomValidity('');
+    input.style.borderColor = '';
+  }
+}
+// Функция проверки числового поля формы
+function validateNumberInput(input, minValue, maxValue) {
+
+  if (Number(input.value) < minValue) {
+    input.setCustomValidity('Минимально допустимое значение составляет - ' + minValue);
+    input.style.borderColor = 'red';
+  } else if (Number(input.value) > maxValue) {
+    input.setCustomValidity('Максимально допустимое значение составляет - ' + maxValue);
+    input.style.borderColor = 'red';
+  } else {
+    input.setCustomValidity('');
+    input.style.borderColor = '';
+  }
+
+}
+
+
+formOfferTitle.addEventListener('input', function (evt) {
+  validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
+});
+
+formAddress.addEventListener('input', function (evt) {
+  validateTextInput(formAddress, MIN_TEXTFIELD, MAX_TEXTFIELD);
+});
+
+formPriceInput.addEventListener('input', function (evt) {
+  validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
 });

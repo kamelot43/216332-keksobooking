@@ -31,6 +31,7 @@ var MIN_PRICE = 0;
 var MAX_PRICE = 1000000;
 var MIN_TEXTFIELD = 30;
 var MAX_TEXTFIELD = 100;
+var STANDART_PRICE = 1000;
 
 var OFFER_HEADING = [
   'Большая уютная квартира',
@@ -125,6 +126,8 @@ var tokyoPinMap = document.querySelector('.tokyo__pin-map');
 var offerDialog = document.querySelector('#offer-dialog');
 var dialogPanel = document.querySelector('.dialog__panel');
 var closeDialog = offerDialog.querySelector('.dialog__close');
+
+var formElement = document.querySelector('.notice__form');
 
 var dialogAvatar = document.querySelector('.dialog__title > img');
 
@@ -297,9 +300,7 @@ var timeOutInput = document.querySelector('#timeout');
 var roomNumer = document.querySelector('#room_number');
 var questsNumer = document.querySelector('#capacity');
 
-
 priceInput.value = 1000;
-
 
 // Установить мин.значение цены + минимально допустимое
 function setMinPriceInput(value) {
@@ -308,33 +309,29 @@ function setMinPriceInput(value) {
 }
 
 // Динамическое изменение поля количество комнат
+// Установить значение по умолчанию
+questsNumer.selectedIndex = INPUT_GUESTS_MIN;
 
 roomNumer.addEventListener('change', function (evt) {
-
   var val = roomNumer.selectedIndex;
   if (val === 0) {
     questsNumer.selectedIndex = INPUT_GUESTS_MIN;
   } else {
     questsNumer.selectedIndex = INPUT_GUESTS_MAX;
   }
-
 });
-
 
 // Динамическое изменение поля время заезда
 timeInInput.addEventListener('change', function (evt) {
-
   var val = timeInInput.selectedIndex;
   timeOutInput.selectedIndex = val;
 });
 
 // Динамическое изменение поля время выезда
 timeOutInput.addEventListener('change', function (evt) {
-
   var val = timeOutInput.selectedIndex;
   timeInInput.selectedIndex = val;
 });
-
 
 housingType.addEventListener('change', function (evt) {
   var val = housingType.options[housingType.selectedIndex].value;
@@ -358,10 +355,14 @@ var formPriceInput = document.querySelector('#price');
 // Функция проверки текстового поля формы
 function validateTextInput(input, minValue, maxValue) {
   if (input.value.length < minValue) {
-    input.setCustomValidity('Минимальная длина заголовка - ' + minValue + ' ' + 'символов');
+    input.setCustomValidity(
+        'Минимальная длина заголовка - ' + minValue + ' ' + 'символов'
+    );
     input.style.borderColor = 'red';
   } else if (input.value.length > maxValue) {
-    input.setCustomValidity('Максимальная длина заголовка - ' + maxValue + ' ' + 'символов');
+    input.setCustomValidity(
+        'Максимальная длина заголовка - ' + maxValue + ' ' + 'символов'
+    );
     input.style.borderColor = 'red';
   } else {
     input.setCustomValidity('');
@@ -370,20 +371,31 @@ function validateTextInput(input, minValue, maxValue) {
 }
 // Функция проверки числового поля формы
 function validateNumberInput(input, minValue, maxValue) {
-
   if (Number(input.value) < minValue) {
-    input.setCustomValidity('Минимально допустимое значение составляет - ' + minValue);
+    input.setCustomValidity(
+        'Минимально допустимое значение составляет - ' + minValue
+    );
     input.style.borderColor = 'red';
   } else if (Number(input.value) > maxValue) {
-    input.setCustomValidity('Максимально допустимое значение составляет - ' + maxValue);
+    input.setCustomValidity(
+        'Максимально допустимое значение составляет - ' + maxValue
+    );
     input.style.borderColor = 'red';
   } else {
     input.setCustomValidity('');
     input.style.borderColor = '';
   }
-
 }
 
+// Очистка формы после отправки
+function ResetForm(form) {
+  form.submit();
+  setTimeout(function () {
+    form.reset();
+    formPriceInput.value = STANDART_PRICE;
+    questsNumer.selectedIndex = INPUT_GUESTS_MIN;
+  }, 100);
+}
 
 formOfferTitle.addEventListener('input', function (evt) {
   validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
@@ -395,4 +407,8 @@ formAddress.addEventListener('input', function (evt) {
 
 formPriceInput.addEventListener('input', function (evt) {
   validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
+});
+
+formElement.addEventListener('submit', function (evt) {
+  ResetForm(formElement);
 });

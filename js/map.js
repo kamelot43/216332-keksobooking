@@ -312,7 +312,7 @@ function setMinPriceInput(value) {
 // Установить значение по умолчанию
 questsNumer.selectedIndex = INPUT_GUESTS_MIN;
 
-roomNumer.addEventListener('change', function (evt) {
+roomNumer.addEventListener('change', function () {
   var val = roomNumer.selectedIndex;
   if (val === 0) {
     questsNumer.selectedIndex = INPUT_GUESTS_MIN;
@@ -322,18 +322,18 @@ roomNumer.addEventListener('change', function (evt) {
 });
 
 // Динамическое изменение поля время заезда
-timeInInput.addEventListener('change', function (evt) {
+timeInInput.addEventListener('change', function () {
   var val = timeInInput.selectedIndex;
   timeOutInput.selectedIndex = val;
 });
 
 // Динамическое изменение поля время выезда
-timeOutInput.addEventListener('change', function (evt) {
+timeOutInput.addEventListener('change', function () {
   var val = timeOutInput.selectedIndex;
   timeInInput.selectedIndex = val;
 });
 
-housingType.addEventListener('change', function (evt) {
+housingType.addEventListener('change', function () {
   var val = housingType.options[housingType.selectedIndex].value;
 
   if (val === 'bungalo') {
@@ -388,7 +388,7 @@ function validateNumberInput(input, minValue, maxValue) {
 }
 
 // Очистка формы после отправки
-function ResetForm(form) {
+function resetForm(form) {
   form.submit();
   setTimeout(function () {
     form.reset();
@@ -397,18 +397,18 @@ function ResetForm(form) {
   }, 100);
 }
 
-formOfferTitle.addEventListener('input', function (evt) {
+formOfferTitle.addEventListener('input', function () {
   validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
 });
 
-formAddress.addEventListener('input', function (evt) {
+formAddress.addEventListener('input', function () {
   validateTextInput(formAddress, MIN_TEXTFIELD, MAX_TEXTFIELD);
 });
 
-formPriceInput.addEventListener('input', function (evt) {
+formPriceInput.addEventListener('input', function () {
   validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
 });
 
-formElement.addEventListener('submit', function (evt) {
-  ResetForm(formElement);
+formElement.addEventListener('submit', function () {
+  resetForm(formElement);
 });

@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-
+  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
 
   // функция, создающая pin с заданными параметрами
   window.createPins = function (arrays) {
@@ -30,4 +30,7 @@
       }
     }
   };
+
+  // Отрисовать созданные пины
+  tokyoPinMap.appendChild(createPins(x));
 })();

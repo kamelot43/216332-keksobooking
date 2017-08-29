@@ -1,166 +1,66 @@
 'use strict';
-var PRICE_MIN = 1000;
-var PRICE_MAX = 1000000;
+(function () {
+  // Клавиши
+  var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
 
-var OFFERS_AMOUNT = 8;
+  var offerDialog = document.querySelector('#offer-dialog');
+  var closeDialog = offerDialog.querySelector('.dialog__close');
+  var tokyo = document.querySelector('.tokyo');
+  window.pin = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
 
-// Клавиши
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
+  // Отрисовать карточку,которая содержит первый элемент из массива x
+  pasteNewData(x[0]);
 
-// Поля формы количество гостей
+  // Отрисовать в карточке текущий пин (при клике мышкой)
+  tokyo.addEventListener('click', function (evt) {
+    var target = evt.target;
 
-var INPUT_GUESTS_MAX = 0;
-var INPUT_GUESTS_MIN = 3;
+    if (target.parentNode.classList.contains('pin')) {
+      renderCurrentPin(target);
+    }
+  });
 
-// Параметры формы
+  // Отрисовать в карточке текущий пин (при нажатии клавиши)
+  tokyo.addEventListener('keydown', function (evt) {
+    var target = evt.target.childNodes[0];
 
-var MIN_PRICE = 0;
-var MAX_PRICE = 1000000;
-var MIN_TEXTFIELD = 30;
-var MAX_TEXTFIELD = 100;
-var STANDART_PRICE = 1000;
+    if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
+      renderCurrentPin(target);
+    }
+  });
 
+  // Закрытия окна диалога + деактивации пина
+  window.onPopupEscPress = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closePopup();
+      getActivePin();
+    }
+  };
 
-var offerDialog = document.querySelector('#offer-dialog');
-var dialogPanel = document.querySelector('.dialog__panel');
-var closeDialog = offerDialog.querySelector('.dialog__close');
+  // Функция открытия окна диалога
+  window.openPopup = function () {
+    offerDialog.classList.remove('hidden');
+    document.addEventListener('keydown', onPopupEscPress);
+  };
 
-var formElement = document.querySelector('.notice__form');
+  // Функция закрытия окна диалога
+  window.closePopup = function () {
+    offerDialog.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
+  };
 
-var dialogAvatar = document.querySelector('.dialog__title > img');
-
-var tokyoPinMap = document.querySelector('.tokyo__pin-map');
-var x = createOffers(OFFERS_AMOUNT);
-
-tokyoPinMap.appendChild(createPins(x));
-
-
-pasteNewData(x[0]);
-
-var tokyo = document.querySelector('.tokyo');
-
-var pin = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
-
-
-tokyo.addEventListener('click', function (evt) {
-  var target = evt.target;
-
-  if (target.parentNode.classList.contains('pin')) {
-    renderCurrentPin(target);
-  }
-});
-
-tokyo.addEventListener('keydown', function (evt) {
-  var target = evt.target.childNodes[0];
-
-  if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
-    renderCurrentPin(target);
-  }
-});
-
-// Обработчки открытия/закрытия окна диалога + деактивации пина
-var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  // Закрытие окна диалоги при клике на крестик мышкой
+  closeDialog.addEventListener('click', function () {
     closePopup();
     getActivePin();
-  }
-};
+  });
 
-// Функция открытия окна диалога
-var openPopup = function () {
-  offerDialog.classList.remove('hidden');
-  document.addEventListener('keydown', onPopupEscPress);
-};
-
-// Функция закрытия окна диалога
-var closePopup = function () {
-  offerDialog.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscPress);
-};
-
-closeDialog.addEventListener('click', function () {
-  closePopup();
-  getActivePin();
-});
-
-closeDialog.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    getActivePin();
-    closePopup();
-  }
-});
-
-// Работа с валидацией формы
-
-var housingType = document.querySelector('#type');
-var priceInput = document.querySelector('#price');
-
-var timeInInput = document.querySelector('#timein');
-var timeOutInput = document.querySelector('#timeout');
-var roomNumer = document.querySelector('#room_number');
-var questsNumer = document.querySelector('#capacity');
-
-priceInput.value = 1000;
-
-
-// Динамическое изменение поля количество комнат
-// Установить значение по умолчанию
-questsNumer.selectedIndex = INPUT_GUESTS_MIN;
-
-roomNumer.addEventListener('change', function () {
-  var val = roomNumer.selectedIndex;
-  if (val === 0) {
-    questsNumer.selectedIndex = INPUT_GUESTS_MIN;
-  } else {
-    questsNumer.selectedIndex = INPUT_GUESTS_MAX;
-  }
-});
-
-// Динамическое изменение поля время заезда
-timeInInput.addEventListener('change', function () {
-  var val = timeInInput.selectedIndex;
-  timeOutInput.selectedIndex = val;
-});
-
-// Динамическое изменение поля время выезда
-timeOutInput.addEventListener('change', function () {
-  var val = timeOutInput.selectedIndex;
-  timeInInput.selectedIndex = val;
-});
-
-housingType.addEventListener('change', function () {
-  var val = housingType.options[housingType.selectedIndex].value;
-
-  if (val === 'bungalo') {
-    setMinPriceInput(0);
-  } else if (val === 'house') {
-    setMinPriceInput(5000);
-  } else if (val === 'palace') {
-    setMinPriceInput(10000);
-  } else {
-    setMinPriceInput(1000);
-  }
-});
-
-var formOfferTitle = document.querySelector('#title');
-var formAddress = document.querySelector('#address');
-
-var formPriceInput = document.querySelector('#price');
-
-
-formOfferTitle.addEventListener('input', function () {
-  validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
-});
-
-formAddress.addEventListener('input', function () {
-  validateTextInput(formAddress, MIN_TEXTFIELD, MAX_TEXTFIELD);
-});
-
-formPriceInput.addEventListener('input', function () {
-  validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
-});
-
-formElement.addEventListener('submit', function () {
-  resetForm(formElement);
-});
+  // Закрытие окна диалоги при нажатии клавиатуры
+  closeDialog.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      getActivePin();
+      closePopup();
+    }
+  });
+})();

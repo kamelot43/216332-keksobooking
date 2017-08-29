@@ -1,5 +1,8 @@
 'use strict';
 (function () {
+  // Количество элементов в массиве объявлений
+  var OFFERS_AMOUNT = 8;
+
   // Высота и ширина пина
   var PIN_WIDTH = 40;
   var PIN_HEIGHT = 40;
@@ -15,6 +18,8 @@
   var GUESTS_MIN = 1;
   var GUESTS_MAX = 10;
 
+  var PRICE_MIN = 1000;
+  var PRICE_MAX = 1000000;
 
   var OFFER_HEADING = [
     'Большая уютная квартира',
@@ -41,6 +46,9 @@
   var TYPE_ROOMS = ['flat', 'house', 'bungalo'];
 
   var template = document.querySelector('#lodge-template').content;
+
+  var dialogPanel = document.querySelector('.dialog__panel');
+  var dialogAvatar = document.querySelector('.dialog__title > img');
 
   window.setTypeOfRooms = function (room) {
     if (room === 'flat') {
@@ -79,7 +87,8 @@
     var offers = [];
     for (var i = 0; i < param; i++) {
       var location = {
-        x: returnRandomValue(MIN_COORDINATE_X, MAX_COORDINATE_X) + PIN_WIDTH / 2,
+        x:
+          returnRandomValue(MIN_COORDINATE_X, MAX_COORDINATE_X) + PIN_WIDTH / 2,
         y: returnRandomValue(MIN_COORDINATE_Y, MAX_COORDINATE_Y) + PIN_HEIGHT
       };
       offers[i] = {
@@ -113,4 +122,5 @@
     dialogAvatar.src = value.author.avatar;
   };
 
+  window.x = createOffers(OFFERS_AMOUNT);
 })();

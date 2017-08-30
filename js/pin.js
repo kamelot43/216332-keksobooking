@@ -24,13 +24,12 @@
 
   // Проверка на класс .pin--active
   window.getActivePin = function () {
-    for (var j = 0; j < pin.length; j++) {
-      if (pin[j].classList.contains('pin--active')) {
-        pin[j].classList.remove('pin--active');
-      }
+    var activePin = document.querySelector('.pin--active');
+    if (activePin !== null) {
+      activePin.classList.remove('pin--active');
     }
   };
 
   // Отрисовать созданные пины
-  tokyoPinMap.appendChild(createPins(x));
+  tokyoPinMap.appendChild(window.createPins(window.x));
 })();

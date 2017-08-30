@@ -10,14 +10,14 @@
   window.pin = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
 
   // Отрисовать карточку,которая содержит первый элемент из массива x
-  pasteNewData(x[0]);
+  window.pasteNewData(window.x[0]);
 
   // Отрисовать в карточке текущий пин (при клике мышкой)
   tokyo.addEventListener('click', function (evt) {
     var target = evt.target;
 
     if (target.parentNode.classList.contains('pin')) {
-      renderCurrentPin(target);
+      window.renderCurrentPin(target);
     }
   });
 
@@ -26,7 +26,7 @@
     var target = evt.target.childNodes[0];
 
     if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
-      renderCurrentPin(target);
+      window.renderCurrentPin(target);
     }
   });
 
@@ -34,7 +34,7 @@
   var onPopupEscPress = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       closePopup();
-      getActivePin();
+      window.getActivePin();
     }
   };
 
@@ -53,13 +53,13 @@
   // Закрытие окна диалоги при клике на крестик мышкой
   closeDialog.addEventListener('click', function () {
     closePopup();
-    getActivePin();
+    window.getActivePin();
   });
 
   // Закрытие окна диалоги при нажатии клавиатуры
   closeDialog.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      getActivePin();
+      window.getActivePin();
       closePopup();
     }
   });

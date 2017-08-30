@@ -120,18 +120,18 @@
   });
 
   formOfferTitle.addEventListener('input', function () {
-    validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
+    window.validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
   });
 
   formAddress.addEventListener('input', function () {
-    validateTextInput(formAddress, MIN_TEXTFIELD, MAX_TEXTFIELD);
+    window.validateTextInput(formAddress, MIN_TEXTFIELD, MAX_TEXTFIELD);
   });
 
   formPriceInput.addEventListener('input', function () {
-    validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
+    window.validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
   });
 
   formElement.addEventListener('submit', function () {
-    resetForm(formElement);
+    window.resetForm(formElement);
   });
 })();

@@ -45,8 +45,6 @@
 
   var TYPE_ROOMS = ['flat', 'house', 'bungalo'];
 
-  var template = document.querySelector('#lodge-template').content;
-
   var dialogPanel = document.querySelector('.dialog__panel');
   var dialogAvatar = document.querySelector('.dialog__title > img');
 
@@ -116,11 +114,11 @@
 
   // Функция вставки новых данных на страницу
   window.pasteNewData = function (value) {
-    var result = renderOffer(value);
+    var result = window.renderOffer(value);
     dialogPanel.innerHTML = '';
     dialogPanel.appendChild(result);
     dialogAvatar.src = value.author.avatar;
   };
 
-  window.x = createOffers(OFFERS_AMOUNT);
+  window.x = window.createOffers(OFFERS_AMOUNT);
 })();

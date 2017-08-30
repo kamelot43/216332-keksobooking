@@ -10,7 +10,7 @@
       array.offer.adress;
     offerElement.querySelector('.lodge__price').innerHTML =
       array.offer.price + '&#x20bd;/ночь';
-    offerElement.querySelector('.lodge__type').textContent = setTypeOfRooms(
+    offerElement.querySelector('.lodge__type').textContent = window.setTypeOfRooms(
         array.offer.type
     );
     offerElement.querySelector('.lodge__rooms-and-guests').textContent =
@@ -52,15 +52,15 @@
 
   // Функция отрисовки карточки
   window.renderCurrentPin = function (target) {
-    openPopup();
-    getActivePin();
+    window.openPopup();
+    window.getActivePin();
     target.parentNode.classList.add('pin--active');
 
     // Функция сравнивает атр. src у элемента из коллекции Pin с текущим элементом(target)
-    for (var i = 0; i < pin.length; i++) {
-      var z = pin[i].childNodes[0].getAttribute('src');
+    for (var i = 0; i < window.pin.length; i++) {
+      var z = window.pin[i].childNodes[0].getAttribute('src');
       if (z === target.getAttribute('src')) {
-        pasteNewData(x[i]);
+        window.pasteNewData(window.x[i]);
         break;
       }
     }

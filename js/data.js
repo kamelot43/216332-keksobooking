@@ -48,15 +48,6 @@
   var dialogPanel = document.querySelector('.dialog__panel');
   var dialogAvatar = document.querySelector('.dialog__title > img');
 
-  window.setTypeOfRooms = function (room) {
-    if (room === 'flat') {
-      return 'Квартира';
-    } else if (room === 'bungalo') {
-      return 'Бунгало';
-    } else {
-      return 'Дом';
-    }
-  };
 
   // получить случайное значение из диапазона от мин до макс
   var returnRandomValue = function (min, max) {
@@ -80,45 +71,58 @@
     return arrays;
   };
 
+  window.data = {
+
   // создание массива, который состоит из JS объектов
-  window.createOffers = function (param) {
-    var offers = [];
-    for (var i = 0; i < param; i++) {
-      var location = {
-        x:
+    createOffers: function (param) {
+      var offers = [];
+      for (var i = 0; i < param; i++) {
+        var location = {
+          x:
           returnRandomValue(MIN_COORDINATE_X, MAX_COORDINATE_X) + PIN_WIDTH / 2,
-        y: returnRandomValue(MIN_COORDINATE_Y, MAX_COORDINATE_Y) + PIN_HEIGHT
-      };
-      offers[i] = {
-        author: {
-          avatar: 'img/avatars/user0' + (i + 1) + '.png'
-        },
-        location: location,
-        offer: {
-          title: OFFER_HEADING[i],
-          adress: location.x + ',' + location.y,
-          price: returnRandomValue(PRICE_MIN, PRICE_MAX),
-          type: getRandomElem(TYPE_ROOMS),
-          rooms: returnRandomValue(ROOMS_MIN, ROOMS_MAX),
-          guests: returnRandomValue(GUESTS_MIN, GUESTS_MAX),
-          checkin: getRandomElem(TIME_REGISTRATION),
-          checkout: getRandomElem(TIME_REGISTRATION),
-          features: getRandomArrays(1, 6, FEATURES),
-          description: '',
-          photos: []
-        }
-      };
+          y: returnRandomValue(MIN_COORDINATE_Y, MAX_COORDINATE_Y) + PIN_HEIGHT
+        };
+        offers[i] = {
+          author: {
+            avatar: 'img/avatars/user0' + (i + 1) + '.png'
+          },
+          location: location,
+          offer: {
+            title: OFFER_HEADING[i],
+            adress: location.x + ',' + location.y,
+            price: returnRandomValue(PRICE_MIN, PRICE_MAX),
+            type: getRandomElem(TYPE_ROOMS),
+            rooms: returnRandomValue(ROOMS_MIN, ROOMS_MAX),
+            guests: returnRandomValue(GUESTS_MIN, GUESTS_MAX),
+            checkin: getRandomElem(TIME_REGISTRATION),
+            checkout: getRandomElem(TIME_REGISTRATION),
+            features: getRandomArrays(1, 6, FEATURES),
+            description: '',
+            photos: []
+          }
+        };
+      }
+      return offers;
+    },
+
+    setTypeOfRooms: function (room) {
+      if (room === 'flat') {
+        return 'Квартира';
+      } else if (room === 'bungalo') {
+        return 'Бунгало';
+      } else {
+        return 'Дом';
+      }
+    },
+
+    // Функция вставки новых данных на страницу
+    pasteNewData: function (value) {
+      var result = window.card.renderOffer(value);
+      dialogPanel.innerHTML = '';
+      dialogPanel.appendChild(result);
+      dialogAvatar.src = value.author.avatar;
     }
-    return offers;
   };
 
-  // Функция вставки новых данных на страницу
-  window.pasteNewData = function (value) {
-    var result = window.renderOffer(value);
-    dialogPanel.innerHTML = '';
-    dialogPanel.appendChild(result);
-    dialogAvatar.src = value.author.avatar;
-  };
-
-  window.x = window.createOffers(OFFERS_AMOUNT);
+  window.x = window.data.createOffers(OFFERS_AMOUNT);
 })();

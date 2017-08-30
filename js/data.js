@@ -61,18 +61,18 @@
   };
 
   // получить случайное значение из диапазона от мин до макс
-  window.returnRandomValue = function (min, max) {
+  var returnRandomValue = function (min, max) {
     return min + Math.floor(Math.random() * (max + 1 - min));
   };
 
   // получить случайный элемент массива
-  window.getRandomElem = function (array) {
+  var getRandomElem = function (array) {
     var rand = Math.floor(Math.random() * array.length);
     return array[rand];
   };
 
   // Полчить массив случайной длины
-  window.getRandomArrays = function (minValue, maxValue, array) {
+  var getRandomArrays = function (minValue, maxValue, array) {
     var randomLength = returnRandomValue(minValue, maxValue);
 
     var arrays = [];

@@ -39,7 +39,7 @@
   };
 
   // Создание пустых спанов
-  window.createEmptySpan = function (arrays) {
+  var createEmptySpan = function (arrays) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < arrays.offer.features.length; i++) {
       var features = arrays.offer.features[i];

@@ -31,7 +31,7 @@
   });
 
   // Закрытия окна диалога + деактивации пина
-  window.onPopupEscPress = function (evt) {
+  var onPopupEscPress = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       closePopup();
       getActivePin();
@@ -45,7 +45,7 @@
   };
 
   // Функция закрытия окна диалога
-  window.closePopup = function () {
+  var closePopup = function () {
     offerDialog.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
   };

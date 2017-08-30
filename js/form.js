@@ -26,10 +26,10 @@
   var formAddress = document.querySelector('#address');
   var formPriceInput = document.querySelector('#price');
 
-  priceInput.value = 1000;
+  priceInput.value = STANDART_PRICE;
 
   // Установить мин.значение цены + минимально допустимое
-  window.setMinPriceInput = function (value) {
+  var setMinPriceInput = function (value) {
     priceInput.value = value;
     priceInput.min = value;
   };

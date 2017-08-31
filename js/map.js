@@ -3,8 +3,6 @@
   // Клавиши
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
-  var PIN_MAIN_HEIGHT = 98;
-  var PIN_MAIN_WIDTH = 40;
 
   var offerDialog = document.querySelector('#offer-dialog');
   var closeDialog = offerDialog.querySelector('.dialog__close');
@@ -72,6 +70,16 @@
   var formAddress = document.querySelector('#address');
   var pinMain = document.querySelector('.pin__main');
 
+  // Функция заполнения поля адрес
+  function fillAddress() {
+    var points = {
+      x: pinMain.offsetLeft + Math.floor(pinMain.offsetWidth / 2),
+      y: pinMain.offsetTop + pinMain.offsetHeight
+    };
+    formAddress.value = 'x: ' + points.x + ' , ' + 'y: ' + points.y;
+  }
+
+  fillAddress();
 
   pinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -83,6 +91,7 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+      fillAddress();
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,
@@ -96,9 +105,6 @@
 
       pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
       pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
-      var pinMainPointX = (parseInt(pinMain.style.top, 10) + PIN_MAIN_HEIGHT) + 'px';
-      var pinMainPointY = (parseInt(pinMain.style.left, 10) + PIN_MAIN_WIDTH) + 'px';
-      formAddress.value = pinMainPointX + ' ' + pinMainPointY;
     };
 
     var onMouseUp = function (upEvt) {
@@ -111,6 +117,5 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-
 
 })();

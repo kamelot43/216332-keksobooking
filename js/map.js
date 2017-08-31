@@ -63,4 +63,59 @@
       closePopup();
     }
   });
+
+
+  // работаем с pin-main
+
+  var formAddress = document.querySelector('#address');
+  var pinMain = document.querySelector('.pin__main');
+
+  // Функция заполнения поля адрес
+  function fillAddress() {
+    var points = {
+      x: pinMain.offsetLeft + Math.floor(pinMain.offsetWidth / 2),
+      y: pinMain.offsetTop + pinMain.offsetHeight
+    };
+    formAddress.value = 'x: ' + points.x + ' , ' + 'y: ' + points.y;
+  }
+
+  fillAddress();
+
+  pinMain.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      fillAddress();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
+      pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
 })();

@@ -32,7 +32,6 @@
     'Неуютное бунгало по колено в воде'
   ];
 
-  var TIME_REGISTRATION = ['12:00', '13:00', '14:00'];
 
   var FEATURES = [
     'wifi',
@@ -43,6 +42,7 @@
     'conditioner'
   ];
 
+  var TIME_REGISTRATION = ['12:00', '13:00', '14:00'];
   var TYPE_ROOMS = ['flat', 'house', 'bungalo'];
 
   var dialogPanel = document.querySelector('.dialog__panel');

@@ -2,7 +2,6 @@
 (function () {
   // Поля формы количество гостей
 
-  var INPUT_GUESTS_MAX = 0;
   var INPUT_GUESTS_MIN = 3;
 
   // Параметры формы
@@ -12,6 +11,11 @@
   var MIN_TEXTFIELD = 30;
   var MAX_TEXTFIELD = 100;
   var STANDART_PRICE = 1000;
+
+  var TIME_REGISTRATION = ['12:00', '13:00', '14:00'];
+  var ROOMS = ['flat', 'bungalo', 'house', 'palace'];
+  var PRICE = [1000, 0, 5000, 10000];
+  var ROOMS_NUMBER = ['1', '2', '3', '100'];
 
   var priceInput = document.querySelector('#price');
   var formElement = document.querySelector('.notice__form');
@@ -28,11 +32,6 @@
 
   priceInput.value = STANDART_PRICE;
 
-  // Установить мин.значение цены + минимально допустимое
-  var setMinPriceInput = function (value) {
-    priceInput.value = value;
-    priceInput.min = value;
-  };
 
   window.form = {
   // Функция проверки текстового поля формы
@@ -86,39 +85,23 @@
   // Установить значение по умолчанию
   questsNumer.selectedIndex = INPUT_GUESTS_MIN;
 
-  roomNumer.addEventListener('change', function () {
-    var val = roomNumer.selectedIndex;
-    if (val === 0) {
-      questsNumer.selectedIndex = INPUT_GUESTS_MIN;
-    } else {
-      questsNumer.selectedIndex = INPUT_GUESTS_MAX;
-    }
-  });
-
-
   // Вспомогательная функция
   function syncValues(element, value) {
     element.value = value;
   }
 
+  function syncValueWithMin(element, value) {
+    element.min = value;
+    element.value = value;
+  }
 
-  window.synchronizeFields(timeInInput, timeOutInput, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
-  window.synchronizeFields(timeOutInput, timeInInput, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+  // Синхронизировать значение полей
 
+  window.synchronizeFields(timeInInput, timeOutInput, TIME_REGISTRATION, TIME_REGISTRATION, syncValues);
+  window.synchronizeFields(timeOutInput, timeInInput, TIME_REGISTRATION, TIME_REGISTRATION, syncValues);
+  window.synchronizeFields(roomNumer, questsNumer, ROOMS_NUMBER, [0, 3, 3, 3], syncValues);
+  window.synchronizeFields(housingType, priceInput, ROOMS, PRICE, syncValueWithMin);
 
-  housingType.addEventListener('change', function () {
-    var val = housingType.options[housingType.selectedIndex].value;
-
-    if (val === 'bungalo') {
-      setMinPriceInput(0);
-    } else if (val === 'house') {
-      setMinPriceInput(5000);
-    } else if (val === 'palace') {
-      setMinPriceInput(10000);
-    } else {
-      setMinPriceInput(1000);
-    }
-  });
 
   formOfferTitle.addEventListener('input', function () {
     window.form.validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);

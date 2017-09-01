@@ -95,17 +95,16 @@
     }
   });
 
-  // Динамическое изменение поля время заезда
-  timeInInput.addEventListener('change', function () {
-    var val = timeInInput.selectedIndex;
-    timeOutInput.selectedIndex = val;
-  });
 
-  // Динамическое изменение поля время выезда
-  timeOutInput.addEventListener('change', function () {
-    var val = timeOutInput.selectedIndex;
-    timeInInput.selectedIndex = val;
-  });
+  // Вспомогательная функция
+  function syncValues(element, value) {
+    element.value = value;
+  }
+
+
+  window.synchronizeFields(timeInInput, timeOutInput, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+  window.synchronizeFields(timeOutInput, timeInInput, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+
 
   housingType.addEventListener('change', function () {
     var val = housingType.options[housingType.selectedIndex].value;

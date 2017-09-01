@@ -17,7 +17,7 @@
     var target = evt.target;
 
     if (target.parentNode.classList.contains('pin')) {
-      window.card.renderCurrentPin(target);
+      window.showCard.renderCurrentPin(target);
     }
   });
 
@@ -26,7 +26,7 @@
     var target = evt.target.childNodes[0];
 
     if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
-      window.card.renderCurrentPin(target);
+      window.showCard.renderCurrentPin(target);
     }
   });
 

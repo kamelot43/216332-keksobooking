@@ -72,12 +72,13 @@
 
     // Очистка формы после отправки
     resetForm: function (form) {
-      form.submit();
-      setTimeout(function () {
-        form.reset();
-        formPriceInput.value = STANDART_PRICE;
-        questsNumer.selectedIndex = INPUT_GUESTS_MIN;
-      }, 100);
+      // form.submit();
+      formElement.reset();
+      formPriceInput.value = STANDART_PRICE;
+      window.fillAddress();
+      questsNumer.selectedIndex = INPUT_GUESTS_MIN;
+
+
     }
   };
 
@@ -115,7 +116,27 @@
     window.form.validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
   });
 
-  formElement.addEventListener('submit', function () {
-    window.form.resetForm(formElement);
+
+  var onError = function (message) {
+    console.error(message);
+  };
+
+  var onSuccess = function (data) {
+    var animals = data;
+
+    console.log(animals);
+  };
+
+  var onError = function (message) { // необходимо переписать
+    console.error(message);
+  };
+
+  formElement.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(formElement), function () {
+      window.form.resetForm(formElement);
+    }, onError);
+    evt.preventDefault();
   });
+
+
 })();

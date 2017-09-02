@@ -33,5 +33,5 @@
   };
 
   // Отрисовать созданные пины
-  tokyoPinMap.appendChild(window.pin.createPins(window.x));
+  // tokyoPinMap.appendChild(window.pin.createPins(window.x));
 })();

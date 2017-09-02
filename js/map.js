@@ -7,10 +7,7 @@
   var offerDialog = document.querySelector('#offer-dialog');
   var closeDialog = offerDialog.querySelector('.dialog__close');
   var tokyo = document.querySelector('.tokyo');
-  window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
 
-  // Отрисовать карточку,которая содержит первый элемент из массива x
-  window.data.pasteNewData(window.x[0]);
 
   // Отрисовать в карточке текущий пин (при клике мышкой)
   tokyo.addEventListener('click', function (evt) {
@@ -50,6 +47,9 @@
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
+  // По-умолчанию скрыть карточку
+  closePopup();
+
   // Закрытие окна диалоги при клике на крестик мышкой
   closeDialog.addEventListener('click', function () {
     closePopup();
@@ -70,14 +70,15 @@
   var formAddress = document.querySelector('#address');
   var pinMain = document.querySelector('.pin__main');
 
+
   // Функция заполнения поля адрес
-  function fillAddress() {
+  window.fillAddress = function () {
     var points = {
       x: pinMain.offsetLeft + Math.floor(pinMain.offsetWidth / 2),
       y: pinMain.offsetTop + pinMain.offsetHeight
     };
     formAddress.value = 'x: ' + points.x + ' , ' + 'y: ' + points.y;
-  }
+  };
 
   fillAddress();
 

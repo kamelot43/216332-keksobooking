@@ -8,7 +8,7 @@
 
       offerElement.querySelector('.lodge__title').textContent = array.offer.title;
       offerElement.querySelector('.lodge__address').textContent =
-      array.offer.adress;
+      array.offer.address;
       offerElement.querySelector('.lodge__price').innerHTML =
       array.offer.price + '&#x20bd;/ночь';
       offerElement.querySelector('.lodge__type').textContent = window.data.setTypeOfRooms(

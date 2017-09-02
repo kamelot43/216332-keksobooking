@@ -48,6 +48,8 @@
   var dialogPanel = document.querySelector('.dialog__panel');
   var dialogAvatar = document.querySelector('.dialog__title > img');
 
+  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
+
 
   // получить случайное значение из диапазона от мин до макс
   var returnRandomValue = function (min, max) {
@@ -124,5 +126,24 @@
     }
   };
 
-  window.x = window.data.createOffers(OFFERS_AMOUNT);
+  var onSuccess = function (data) {
+    window.animals = data;
+    console.log(data);
+    // Отрисовать карточку,которая содержит первый элемент из массива animals
+
+    tokyoPinMap.appendChild(window.pin.createPins(animals));
+    window.openPopup();
+    window.data.pasteNewData(window.animals[0]);
+
+    window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
+  };
+
+  var onError = function (message) { // необходимо переписать
+    console.error(message);
+  };
+
+  window.backend.load(onSuccess, onError);
+
+
+  // window.x = window.data.createOffers(OFFERS_AMOUNT);
 })();

@@ -80,7 +80,7 @@
     formAddress.value = 'x: ' + points.x + ' , ' + 'y: ' + points.y;
   };
 
-  fillAddress();
+  window.fillAddress();
 
   pinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -92,7 +92,7 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      fillAddress();
+      window.fillAddress();
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,

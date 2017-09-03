@@ -71,7 +71,7 @@
     },
 
     // Очистка формы после отправки
-    resetForm: function (form) {
+    resetForm: function () {
       formElement.reset();
       formPriceInput.value = STANDART_PRICE;
       window.fillAddress();
@@ -113,7 +113,7 @@
     window.form.validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
   });
 
-
+  // Отправка по сети данных формы методом AJAX
   formElement.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(formElement), function () {
       window.form.resetForm(formElement);

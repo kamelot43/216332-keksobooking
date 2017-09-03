@@ -8,10 +8,25 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onSuccess(xhr.response);
-      } else {
-        onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
+      switch (xhr.status) {
+        case 200:
+          onSuccess(xhr.response);
+          break;
+        case 400:
+          onError(xhr.status + xhr.statusText + 'Неверный запрос');
+          break;
+        case 404:
+          onError(xhr.status + xhr.statusText + 'Ничего не найдено');
+          break;
+        case 401:
+          onError(xhr.status + xhr.statusText + 'Пользователь не авторизован');
+          break;
+        case 500:
+          onError(xhr.status + xhr.statusText + 'Ошибка сервера');
+          break;
+        default:
+          onError('Неизвестный статус' + xhr.status + xhr.statusText);
+          break;
       }
     });
 

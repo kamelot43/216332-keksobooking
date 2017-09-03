@@ -71,13 +71,11 @@
     },
 
     // Очистка формы после отправки
-    resetForm: function (form) {
-      form.submit();
-      setTimeout(function () {
-        form.reset();
-        formPriceInput.value = STANDART_PRICE;
-        questsNumer.selectedIndex = INPUT_GUESTS_MIN;
-      }, 100);
+    resetForm: function () {
+      formElement.reset();
+      formPriceInput.value = STANDART_PRICE;
+      window.fillAddress();
+      questsNumer.selectedIndex = INPUT_GUESTS_MIN;
     }
   };
 
@@ -115,7 +113,13 @@
     window.form.validateNumberInput(formPriceInput, MIN_PRICE, MAX_PRICE);
   });
 
-  formElement.addEventListener('submit', function () {
-    window.form.resetForm(formElement);
+  // Отправка по сети данных формы методом AJAX
+  formElement.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(formElement), function () {
+      window.form.resetForm(formElement);
+    }, window.backend.error);
+    evt.preventDefault();
   });
+
+
 })();

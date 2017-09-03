@@ -1,6 +1,13 @@
 'use strict';
 (function () {
-  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
+
+  // Проверка на класс .pin--active
+  var getActivePin = function () {
+    var activePin = document.querySelector('.pin--active');
+    if (activePin !== null) {
+      activePin.classList.remove('pin--active');
+    }
+  };
 
   window.pin = {
   // функция, создающая pin с заданными параметрами
@@ -22,16 +29,15 @@
       }
       return fragment;
     },
-
-    // Проверка на класс .pin--active
-    getActivePin: function () {
-      var activePin = document.querySelector('.pin--active');
-      if (activePin !== null) {
-        activePin.classList.remove('pin--active');
-      }
+    activatePin: function (evt) {
+      window.openPopup();
+      getActivePin();
+      evt.parentNode.classList.add('pin--active');
+    },
+    deactivatePin: function () {
+      window.closePopup();
+      getActivePin();
     }
   };
 
-  // Отрисовать созданные пины
-  tokyoPinMap.appendChild(window.pin.createPins(window.x));
 })();

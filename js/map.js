@@ -7,16 +7,14 @@
   var offerDialog = document.querySelector('#offer-dialog');
   var closeDialog = offerDialog.querySelector('.dialog__close');
   var tokyo = document.querySelector('.tokyo');
-  window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
 
-  // Отрисовать карточку,которая содержит первый элемент из массива x
-  window.data.pasteNewData(window.x[0]);
 
   // Отрисовать в карточке текущий пин (при клике мышкой)
   tokyo.addEventListener('click', function (evt) {
     var target = evt.target;
 
     if (target.parentNode.classList.contains('pin')) {
+      window.pin.activatePin(target);
       window.showCard.renderCurrentPin(target);
     }
   });
@@ -26,6 +24,7 @@
     var target = evt.target.childNodes[0];
 
     if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
+      window.pin.activatePin(target);
       window.showCard.renderCurrentPin(target);
     }
   });
@@ -33,8 +32,7 @@
   // Закрытия окна диалога + деактивации пина
   var onPopupEscPress = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
-      closePopup();
-      window.pin.getActivePin();
+      window.pin.deactivatePin();
     }
   };
 
@@ -45,22 +43,24 @@
   };
 
   // Функция закрытия окна диалога
-  var closePopup = function () {
+  window.closePopup = function () {
     offerDialog.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
+  // По-умолчанию скрыть карточку
+  window.closePopup();
+
   // Закрытие окна диалоги при клике на крестик мышкой
   closeDialog.addEventListener('click', function () {
-    closePopup();
-    window.pin.getActivePin();
+
+    window.pin.deactivatePin();
   });
 
   // Закрытие окна диалоги при нажатии клавиатуры
   closeDialog.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      window.pin.getActivePin();
-      closePopup();
+      window.pin.deactivatePin();
     }
   });
 
@@ -70,16 +70,17 @@
   var formAddress = document.querySelector('#address');
   var pinMain = document.querySelector('.pin__main');
 
+
   // Функция заполнения поля адрес
-  function fillAddress() {
+  window.fillAddress = function () {
     var points = {
       x: pinMain.offsetLeft + Math.floor(pinMain.offsetWidth / 2),
       y: pinMain.offsetTop + pinMain.offsetHeight
     };
     formAddress.value = 'x: ' + points.x + ' , ' + 'y: ' + points.y;
-  }
+  };
 
-  fillAddress();
+  window.fillAddress();
 
   pinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -91,7 +92,7 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      fillAddress();
+      window.fillAddress();
 
       var shift = {
         x: startCoords.x - moveEvt.clientX,

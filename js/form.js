@@ -118,23 +118,29 @@
 
 
   var onError = function (message) {
-    console.error(message);
+    var node = document.createElement('div');
+    node.style.zIndex = '100';
+    node.style.margin = '0 auto';
+    node.style.textAlign = 'center';
+    node.style.textAlign = 'center';
+    node.style.backgroundColor = 'red';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.top = '120px';
+    node.style.fontSize = '30px';
+    node.style.fontWeight = 'bold';
+    node.textContent = message;
+    document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  var onSuccess = function (data) {
-    var animals = data;
-
-    console.log(animals);
+  var onSuccess = function () {
+    window.form.resetForm(formElement);
   };
 
-  var onError = function (message) { // необходимо переписать
-    console.error(message);
-  };
 
   formElement.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(formElement), function () {
-      window.form.resetForm(formElement);
-    }, onError);
+    window.backend.save(new FormData(formElement), onSuccess, onError);
     evt.preventDefault();
   });
 

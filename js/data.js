@@ -127,10 +127,12 @@
   };
 
   var onSuccess = function (data) {
+    // В переменной animal содержится массив ,загруженный по сети
     window.animals = data;
-    console.log(data);
-    // Отрисовать карточку,которая содержит первый элемент из массива animals
+    // Согласно задания на карте должно быть 8 элементов (меток)
+    data.length = 8;
 
+    // Отрисовать карточку,которая содержит первый элемент из массива animals
     tokyoPinMap.appendChild(window.pin.createPins(animals));
     window.openPopup();
     window.data.pasteNewData(window.animals[0]);
@@ -138,8 +140,21 @@
     window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
   };
 
-  var onError = function (message) { // необходимо переписать
-    console.error(message);
+  var onError = function (message) {
+    var node = document.createElement('div');
+    node.style.zIndex = '100';
+    node.style.margin = '0 auto';
+    node.style.textAlign = 'center';
+    node.style.textAlign = 'center';
+    node.style.backgroundColor = 'red';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.top = '120px';
+    node.style.fontSize = '30px';
+    node.style.fontWeight = 'bold';
+    node.textContent = message;
+    document.body.insertAdjacentElement('afterbegin', node);
   };
 
   window.backend.load(onSuccess, onError);

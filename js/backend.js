@@ -40,13 +40,23 @@
       xhr.addEventListener('load', function () {
         switch (xhr.status) {
           case 200:
-            onSuccess(xhr.response);
+            onSuccess();
             break;
 
           default:
             onError('Неизвестный статус: ' + xhr.status + ' ' + xhr.statusText);
         }
       });
+
+      xhr.addEventListener('error', function () {
+        onError('Произошла ошибка соединени');
+      });
+
+      xhr.addEventListener('timeout', function () {
+        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      });
+
+      xhr.timeout = 10000; // 10s
 
       xhr.open('POST', URL_FORM);
       xhr.send(data);

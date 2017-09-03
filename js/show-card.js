@@ -15,6 +15,7 @@
 
         if (z === target.getAttribute('src')) {
 
+
           window.data.pasteNewData(window.animals[i]);
           break;
         }

@@ -40,6 +40,7 @@
     window.data.pasteNewData(window.responseRequest[0]);
 
     window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
+
   };
 
 

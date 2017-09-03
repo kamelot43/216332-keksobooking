@@ -4,21 +4,11 @@
   window.showCard = {
     // Функция отрисовки карточки
     renderCurrentPin: function (target) {
-      window.openPopup();
-      window.pin.getActivePin();
+
       target.parentNode.classList.add('pin--active');
+      var x = Array.prototype.slice.call(pinsCollection).indexOf(target.parentNode);
+      window.data.pasteNewData(window.responseRequest[x]);
 
-
-      // Функция сравнивает атр. src у элемента из коллекции Pin с текущим элементом(target)
-      for (var i = 0; i < window.pinsCollection.length; i++) {
-        var z = window.pinsCollection[i].childNodes[0].getAttribute('src');
-
-        if (z === target.getAttribute('src')) {
-          // В переменной responseRequest содержится массив объявлений ,загруженный по сети
-          window.data.pasteNewData(window.responseRequest[i]);
-          break;
-        }
-      }
     }
   };
 })();

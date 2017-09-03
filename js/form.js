@@ -72,13 +72,10 @@
 
     // Очистка формы после отправки
     resetForm: function (form) {
-      // form.submit();
       formElement.reset();
       formPriceInput.value = STANDART_PRICE;
       window.fillAddress();
       questsNumer.selectedIndex = INPUT_GUESTS_MIN;
-
-
     }
   };
 
@@ -117,30 +114,10 @@
   });
 
 
-  var onError = function (message) {
-    var node = document.createElement('div');
-    node.style.zIndex = '100';
-    node.style.margin = '0 auto';
-    node.style.textAlign = 'center';
-    node.style.textAlign = 'center';
-    node.style.backgroundColor = 'red';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.top = '120px';
-    node.style.fontSize = '30px';
-    node.style.fontWeight = 'bold';
-    node.textContent = message;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-  var onSuccess = function () {
-    window.form.resetForm(formElement);
-  };
-
-
   formElement.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(formElement), onSuccess, onError);
+    window.backend.save(new FormData(formElement), function () {
+      window.form.resetForm(formElement);
+    }, window.backend.error);
     evt.preventDefault();
   });
 

@@ -126,39 +126,22 @@
     }
   };
 
+
   var onSuccess = function (data) {
-    // В переменной animal содержится массив ,загруженный по сети
-    window.animals = data;
+    // В переменной responseRequest содержится массив объявлений ,загруженный по сети
+    window.responseRequest = data;
     // Согласно задания на карте должно быть 8 элементов (меток)
-    data.length = 8;
+    responseRequest.length = 8;
 
     // Отрисовать карточку,которая содержит первый элемент из массива animals
-    tokyoPinMap.appendChild(window.pin.createPins(animals));
+    tokyoPinMap.appendChild(window.pin.createPins(responseRequest));
     window.openPopup();
-    window.data.pasteNewData(window.animals[0]);
+    window.data.pasteNewData(window.responseRequest[0]);
 
     window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
   };
 
-  var onError = function (message) {
-    var node = document.createElement('div');
-    node.style.zIndex = '100';
-    node.style.margin = '0 auto';
-    node.style.textAlign = 'center';
-    node.style.textAlign = 'center';
-    node.style.backgroundColor = 'red';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.top = '120px';
-    node.style.fontSize = '30px';
-    node.style.fontWeight = 'bold';
-    node.textContent = message;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
 
-  window.backend.load(onSuccess, onError);
+  window.backend.load(onSuccess, window.backend.error);
 
-
-  // window.x = window.data.createOffers(OFFERS_AMOUNT);
 })();

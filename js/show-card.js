@@ -14,9 +14,8 @@
         var z = window.pinsCollection[i].childNodes[0].getAttribute('src');
 
         if (z === target.getAttribute('src')) {
-
-
-          window.data.pasteNewData(window.animals[i]);
+          // В переменной responseRequest содержится массив объявлений ,загруженный по сети
+          window.data.pasteNewData(window.responseRequest[i]);
           break;
         }
       }

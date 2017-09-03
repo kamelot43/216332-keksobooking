@@ -13,6 +13,9 @@
         return 'Квартира';
       } else if (room === 'bungalo') {
         return 'Бунгало';
+
+      } else if (room === 'palace') {
+        return 'Дворец';
       } else {
         return 'Дом';
       }
@@ -31,8 +34,6 @@
   var onSuccess = function (data) {
     // В переменной responseRequest содержится массив объявлений ,загруженный по сети
     window.responseRequest = data;
-    // Согласно задания на карте должно быть 8 элементов (меток)
-    window.responseRequest.length = 8;
 
     // Отрисовать карточку,которая содержит первый элемент из массива animals
     tokyoPinMap.appendChild(window.pin.createPins(window.responseRequest));

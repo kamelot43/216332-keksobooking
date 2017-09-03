@@ -14,8 +14,7 @@
     var target = evt.target;
 
     if (target.parentNode.classList.contains('pin')) {
-      window.openPopup();
-      window.pin.getActivePin();
+      window.pin.activatePin(target);
       window.showCard.renderCurrentPin(target);
     }
   });
@@ -25,8 +24,7 @@
     var target = evt.target.childNodes[0];
 
     if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
-      window.openPopup();
-      window.pin.getActivePin();
+      window.pin.activatePin(target);
       window.showCard.renderCurrentPin(target);
     }
   });
@@ -34,8 +32,7 @@
   // Закрытия окна диалога + деактивации пина
   var onPopupEscPress = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
-      closePopup();
-      window.pin.getActivePin();
+      window.pin.deactivatePin();
     }
   };
 
@@ -46,25 +43,24 @@
   };
 
   // Функция закрытия окна диалога
-  var closePopup = function () {
+  window.closePopup = function () {
     offerDialog.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
   };
 
   // По-умолчанию скрыть карточку
-  closePopup();
+  window.closePopup();
 
   // Закрытие окна диалоги при клике на крестик мышкой
   closeDialog.addEventListener('click', function () {
-    closePopup();
-    window.pin.getActivePin();
+
+    window.pin.deactivatePin();
   });
 
   // Закрытие окна диалоги при нажатии клавиатуры
   closeDialog.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-      window.pin.getActivePin();
-      closePopup();
+      window.pin.deactivatePin();
     }
   });
 

@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+
   // Проверка на класс .pin--active
   var getActivePin = function () {
     var activePin = document.querySelector('.pin--active');
@@ -28,6 +29,14 @@
         fragment.appendChild(pin);
       }
       return fragment;
+    },
+
+    deletePins: function () {
+      Array.prototype.forEach.call(window.pinsCollection, function (element) {
+        if (!element.classList.contains('pin__main')) {
+          window.tokyoPinMap.removeChild(element);
+        }
+      });
     },
     activatePin: function (evt) {
       window.openPopup();

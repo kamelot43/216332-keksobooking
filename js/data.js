@@ -1,9 +1,8 @@
 'use strict';
 (function () {
-
+  window.tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var dialogPanel = document.querySelector('.dialog__panel');
   var dialogAvatar = document.querySelector('.dialog__title > img');
-  var tokyoPinMap = document.querySelector('.tokyo__pin-map');
 
 
   window.data = {
@@ -39,7 +38,6 @@
     tokyoPinMap.appendChild(window.pin.createPins(window.responseRequest));
     window.openPopup();
     window.data.pasteNewData(window.responseRequest[0]);
-
     window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
 
   };

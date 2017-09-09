@@ -20,6 +20,15 @@
     return features;
   };
 
+  var filterFeatures = function (filtersFeature, itemFeatures) {
+    for (var i = 0; i < filtersFeature.length; i++) {
+      if (itemFeatures.indexOf(filtersFeature[i]) === -1) {
+        return false;
+      }
+    }
+    return true;
+  };
+
 
   var selectOption = function (element, setValue, type) {
     if (type === 'number') {
@@ -53,25 +62,24 @@
 
     return data.filter(function (element) {
 
-      return isPricesMatch(element) && selectOption(housingTypeElement, element.offer.type, 'string');
+      return selectOption(housingTypeElement, element.offer.type, 'string') &&
+    isPricesMatch(element) &&
+    selectOption(housingRoomsElement, element.offer.rooms, 'number') &&
+    selectOption(housingGuestsElement, element.offer.guests, 'number') &&
+    filterFeatures(getSelectedFeatures(), element.offer.features);
     });
   };
 
-  var test = function () {
+  var renderFilteredPins = function () {
 
     window.pin.deletePins();
     window.x = getFilteredAdverts(window.responseRequest);
-    console.log(x);
 
     tokyoPinMap.appendChild(window.pin.createPins(window.x));
 
   };
 
 
-  housingTypeElement.addEventListener('change', test);
-  // housingRoomsElement.addEventListener('change', test);
-  // housingGuestsElement.addEventListener('change', test);
-  housingPriceElement.addEventListener('change', test);
-  // housingFeaturesElement.addEventListener('change', test);
+  filters.addEventListener('change', renderFilteredPins);
 
 })();

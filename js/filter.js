@@ -74,8 +74,9 @@
 
     window.pin.deletePins();
     window.x = getFilteredAdverts(window.responseRequest);
-
     tokyoPinMap.appendChild(window.pin.createPins(window.x));
+    window.data.pasteNewData(window.x[0]);
+    window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
 
   };
 

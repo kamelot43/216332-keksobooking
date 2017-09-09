@@ -34,6 +34,7 @@
     // В переменной responseRequest содержится массив объявлений ,загруженный по сети
     window.responseRequest = data;
 
+
     // Отрисовать карточку,которая содержит первый элемент из массива animals
     tokyoPinMap.appendChild(window.pin.createPins(window.responseRequest));
     window.openPopup();

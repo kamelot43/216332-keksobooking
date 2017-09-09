@@ -32,7 +32,7 @@
     },
 
     deletePins: function () {
-      Array.prototype.forEach.call(window.pinsCollection, function (element) {
+      Array.prototype.forEach.call(window.tokyoPinMap.querySelectorAll('.pin'), function (element) {
         if (!element.classList.contains('pin__main')) {
           window.tokyoPinMap.removeChild(element);
         }

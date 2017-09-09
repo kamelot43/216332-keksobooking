@@ -20,34 +20,58 @@
     return features;
   };
 
-  var selectOption = function (optionValue, offer) {
-    return optionValue === 'any' ? true : optionValue === offer;
+
+  var selectOption = function (element, setValue, type) {
+    if (type === 'number') {
+      return element.value === 'any' ? true : setValue === parseInt(element.value, 10);
+    } else {
+      return element.value === 'any' ? true : setValue === element.value;
+    }
+  };
+
+  // блок цена
+  var isPricesMatch = function (ad) {
+    var priceFiltered;
+    switch (housingPriceElement.value) {
+      case 'any':
+        priceFiltered = true;
+        break;
+      case 'middle':
+        priceFiltered = ad.offer.price <= 50000 && ad.offer.price >= 10000;
+        break;
+      case 'low':
+        priceFiltered = ad.offer.price < 10000;
+        break;
+      case 'high':
+        priceFiltered = ad.offer.price > 50000;
+        break;
+    }
+    return priceFiltered;
   };
 
   var getFilteredAdverts = function (data) {
+
     return data.filter(function (element) {
-      return selectOption(housingTypeElement.value, element.offer.type);
+
+      return isPricesMatch(element) && selectOption(housingTypeElement, element.offer.type, 'string');
     });
   };
 
   var test = function () {
 
     window.pin.deletePins();
-    window.sameCoatWizards = responseRequest.filter(function (it) {
-      return it.offer.rooms === 0;
-    });
+    window.x = getFilteredAdverts(window.responseRequest);
+    console.log(x);
 
-
-    // tokyoPinMap.appendChild(window.pin.createPins(window.sameCoatWizards));
-    tokyoPinMap.appendChild(window.pin.createPins(window.sameCoatWizards));
+    tokyoPinMap.appendChild(window.pin.createPins(window.x));
 
   };
 
 
   housingTypeElement.addEventListener('change', test);
-  housingRoomsElement.addEventListener('change', test);
-  housingGuestsElement.addEventListener('change', test);
-  // housingPriceFilter.addEventListener('change', onPriceFilterChange);
-  housingFeaturesElement.addEventListener('change', test);
+  // housingRoomsElement.addEventListener('change', test);
+  // housingGuestsElement.addEventListener('change', test);
+  housingPriceElement.addEventListener('change', test);
+  // housingFeaturesElement.addEventListener('change', test);
 
 })();

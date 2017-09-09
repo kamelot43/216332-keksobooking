@@ -15,7 +15,7 @@
 
     if (target.parentNode.classList.contains('pin')) {
       window.pin.activatePin(target);
-      // window.showCard.renderCurrentPin(target);
+
       if (!window.x) {
         window.showCard.renderCurrentPin(target, window.responseRequest);
       } else {

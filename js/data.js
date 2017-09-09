@@ -36,7 +36,7 @@
 
 
     // Отрисовать карточку,которая содержит первый элемент из массива animals
-    tokyoPinMap.appendChild(window.pin.createPins(window.responseRequest));
+    tokyoPinMap.appendChild(window.pin.createPins(window.responseRequest, 3));
     window.openPopup();
     window.data.pasteNewData(window.responseRequest[0]);
     window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого

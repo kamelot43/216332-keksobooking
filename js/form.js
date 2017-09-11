@@ -1,7 +1,5 @@
 'use strict';
 (function () {
-  // Поля формы количество гостей
-
   var INPUT_GUESTS_MIN = 2;
 
   // Параметры формы
@@ -27,14 +25,12 @@
   var questsNumer = document.querySelector('#capacity');
 
   var formOfferTitle = document.querySelector('#title');
-  var formAddress = document.querySelector('#address');
   var formPriceInput = document.querySelector('#price');
 
   priceInput.value = STANDART_PRICE;
 
-
   window.form = {
-  // Функция проверки текстового поля формы
+    // Функция проверки текстового поля формы
     validateTextInput: function (input, minValue, maxValue) {
       if (input.value.length < minValue) {
         input.setCustomValidity(
@@ -95,11 +91,34 @@
 
   // Синхронизировать значение полей
 
-  window.synchronizeFields(timeInInput, timeOutInput, TIME_REGISTRATION, TIME_REGISTRATION, syncValues);
-  window.synchronizeFields(timeOutInput, timeInInput, TIME_REGISTRATION, TIME_REGISTRATION, syncValues);
-  window.synchronizeFields(roomNumer, questsNumer, ROOMS_NUMBER, [1, 1, 1, 0], syncValues);
-  window.synchronizeFields(housingType, priceInput, ROOMS, PRICE, syncValueWithMin);
-
+  window.synchronizeFields(
+      timeInInput,
+      timeOutInput,
+      TIME_REGISTRATION,
+      TIME_REGISTRATION,
+      syncValues
+  );
+  window.synchronizeFields(
+      timeOutInput,
+      timeInInput,
+      TIME_REGISTRATION,
+      TIME_REGISTRATION,
+      syncValues
+  );
+  window.synchronizeFields(
+      roomNumer,
+      questsNumer,
+      ROOMS_NUMBER,
+      [1, 1, 1, 0],
+      syncValues
+  );
+  window.synchronizeFields(
+      housingType,
+      priceInput,
+      ROOMS,
+      PRICE,
+      syncValueWithMin
+  );
 
   formOfferTitle.addEventListener('input', function () {
     window.form.validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
@@ -111,11 +130,13 @@
 
   // Отправка по сети данных формы методом AJAX
   formElement.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(formElement), function () {
-      window.form.resetForm(formElement);
-    }, window.backend.error);
+    window.backend.save(
+        new FormData(formElement),
+        function () {
+          window.form.resetForm(formElement);
+        },
+        window.backend.error
+    );
     evt.preventDefault();
   });
-
-
 })();

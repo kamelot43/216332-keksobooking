@@ -3,10 +3,9 @@
   window.tokyoPinMap = document.querySelector('.tokyo__pin-map');
   var dialogPanel = document.querySelector('.dialog__panel');
   var dialogAvatar = document.querySelector('.dialog__title > img');
-
+  var DEFAULT_ARRAYS = 3;
 
   window.data = {
-
     setTypeOfRooms: function (room) {
       switch (room) {
         case 'flat':
@@ -20,7 +19,6 @@
       }
     },
 
-
     // Функция вставки новых данных на страницу
     pasteNewData: function (value) {
       var result = window.card.renderOffer(value);
@@ -30,19 +28,17 @@
     }
   };
 
-
   var onSuccess = function (data) {
     // В переменной responseRequest содержится массив объявлений ,загруженный по сети
     window.responseRequest = data;
     // Отрисовать карточку,которая содержит первый элемент из массива animals
-    tokyoPinMap.appendChild(window.pin.createPins(window.responseRequest, 3));
+    window.tokyoPinMap.appendChild(
+        window.pin.createPins(window.responseRequest, DEFAULT_ARRAYS)
+    );
     window.openPopup();
     window.data.pasteNewData(window.responseRequest[0]);
     window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
-
   };
 
-
   window.backend.load(onSuccess, window.backend.error);
-
 })();

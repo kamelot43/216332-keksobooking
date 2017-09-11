@@ -32,11 +32,8 @@
         ', выезд до ' +
         ' ' +
         array.offer.checkout;
-      offerElement
-          .querySelector('.lodge__features')
-          .appendChild(window.card.createEmptySpan(array));
-      offerElement.querySelector('.lodge__description').textContent =
-        array.offer.description;
+      offerElement.querySelector('.lodge__features').appendChild(window.card.createEmptySpan(array));
+      offerElement.querySelector('.lodge__description').textContent = array.offer.description;
       return offerElement;
     },
 

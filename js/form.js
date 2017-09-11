@@ -2,7 +2,7 @@
 (function () {
   // Поля формы количество гостей
 
-  var INPUT_GUESTS_MIN = 3;
+  var INPUT_GUESTS_MIN = 2;
 
   // Параметры формы
 
@@ -97,16 +97,12 @@
 
   window.synchronizeFields(timeInInput, timeOutInput, TIME_REGISTRATION, TIME_REGISTRATION, syncValues);
   window.synchronizeFields(timeOutInput, timeInInput, TIME_REGISTRATION, TIME_REGISTRATION, syncValues);
-  window.synchronizeFields(roomNumer, questsNumer, ROOMS_NUMBER, [0, 3, 3, 3], syncValues);
+  window.synchronizeFields(roomNumer, questsNumer, ROOMS_NUMBER, [1, 1, 1, 0], syncValues);
   window.synchronizeFields(housingType, priceInput, ROOMS, PRICE, syncValueWithMin);
 
 
   formOfferTitle.addEventListener('input', function () {
     window.form.validateTextInput(formOfferTitle, MIN_TEXTFIELD, MAX_TEXTFIELD);
-  });
-
-  formAddress.addEventListener('input', function () {
-    window.form.validateTextInput(formAddress, MIN_TEXTFIELD, MAX_TEXTFIELD);
   });
 
   formPriceInput.addEventListener('input', function () {

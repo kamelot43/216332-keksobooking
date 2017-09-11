@@ -32,7 +32,12 @@
 
     if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
       window.pin.activatePin(target);
-      window.showCard.renderCurrentPin(target);
+
+      if (!window.x) {
+        window.showCard.renderCurrentPin(target, window.responseRequest);
+      } else {
+        window.showCard.renderCurrentPin(target, window.x);
+      }
     }
   });
 

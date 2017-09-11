@@ -8,17 +8,18 @@
   window.data = {
 
     setTypeOfRooms: function (room) {
-      if (room === 'flat') {
-        return 'Квартира';
-      } else if (room === 'bungalo') {
-        return 'Бунгало';
-
-      } else if (room === 'palace') {
-        return 'Дворец';
-      } else {
-        return 'Дом';
+      switch (room) {
+        case 'flat':
+          return 'Квартира';
+        case 'bungalo':
+          return 'Бунгало';
+        case 'palace':
+          return 'Дворец';
+        default:
+          return 'Дом';
       }
     },
+
 
     // Функция вставки новых данных на страницу
     pasteNewData: function (value) {
@@ -33,8 +34,6 @@
   var onSuccess = function (data) {
     // В переменной responseRequest содержится массив объявлений ,загруженный по сети
     window.responseRequest = data;
-
-
     // Отрисовать карточку,которая содержит первый элемент из массива animals
     tokyoPinMap.appendChild(window.pin.createPins(window.responseRequest, 3));
     window.openPopup();

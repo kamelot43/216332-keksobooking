@@ -38,11 +38,13 @@
         }
       });
     },
+
     activatePin: function (evt) {
       window.openPopup();
       getActivePin();
       evt.parentNode.classList.add('pin--active');
     },
+
     deactivatePin: function () {
       window.closePopup();
       getActivePin();

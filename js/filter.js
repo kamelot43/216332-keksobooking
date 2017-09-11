@@ -75,12 +75,15 @@
     window.pin.deletePins();
     window.x = getFilteredAdverts(window.responseRequest);
     tokyoPinMap.appendChild(window.pin.createPins(window.x, window.x.length));
-    // window.data.pasteNewData(window.x[0]);
     window.pinsCollection = document.querySelectorAll('.pin:not(:first-child)'); // Все кроме первого
 
   };
 
+  var filterChange = function () {
+    window.debounce(renderFilteredPins);
+  };
 
-  filters.addEventListener('change', renderFilteredPins);
+
+  filters.addEventListener('change', filterChange);
 
 })();

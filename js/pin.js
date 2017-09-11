@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+
   // Проверка на класс .pin--active
   var getActivePin = function () {
     var activePin = document.querySelector('.pin--active');
@@ -11,9 +12,9 @@
 
   window.pin = {
   // функция, создающая pin с заданными параметрами
-    createPins: function (arrays) {
+    createPins: function (arrays, length) {
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < arrays.length; i++) {
+      for (var i = 0; i < length; i++) {
         var pin = document.createElement('div');
         var img = document.createElement('img');
         pin.className = 'pin';
@@ -29,11 +30,21 @@
       }
       return fragment;
     },
+
+    deletePins: function () {
+      Array.prototype.forEach.call(window.tokyoPinMap.querySelectorAll('.pin'), function (element) {
+        if (!element.classList.contains('pin__main')) {
+          window.tokyoPinMap.removeChild(element);
+        }
+      });
+    },
+
     activatePin: function (evt) {
       window.openPopup();
       getActivePin();
       evt.parentNode.classList.add('pin--active');
     },
+
     deactivatePin: function () {
       window.closePopup();
       getActivePin();

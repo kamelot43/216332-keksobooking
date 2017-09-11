@@ -8,6 +8,9 @@
   var closeDialog = offerDialog.querySelector('.dialog__close');
   var tokyo = document.querySelector('.tokyo');
 
+  var formAddress = document.querySelector('#address');
+  var pinMain = document.querySelector('.pin__main');
+
 
   // Отрисовать в карточке текущий пин (при клике мышкой)
   tokyo.addEventListener('click', function (evt) {
@@ -15,7 +18,14 @@
 
     if (target.parentNode.classList.contains('pin')) {
       window.pin.activatePin(target);
-      window.showCard.renderCurrentPin(target);
+
+      if (!window.filteOffers) {
+        window.showCard.renderCurrentPin(target, window.responseRequest);
+      } else {
+        window.showCard.renderCurrentPin(target, window.filteOffers);
+      }
+
+
     }
   });
 
@@ -25,7 +35,12 @@
 
     if (target.parentNode.classList.contains('pin') && evt.keyCode === 13) {
       window.pin.activatePin(target);
-      window.showCard.renderCurrentPin(target);
+
+      if (!window.filteOffers) {
+        window.showCard.renderCurrentPin(target, window.responseRequest);
+      } else {
+        window.showCard.renderCurrentPin(target, window.filteOffers);
+      }
     }
   });
 
@@ -63,12 +78,6 @@
       window.pin.deactivatePin();
     }
   });
-
-
-  // работаем с pin-main
-
-  var formAddress = document.querySelector('#address');
-  var pinMain = document.querySelector('.pin__main');
 
 
   // Функция заполнения поля адрес
